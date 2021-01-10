@@ -28,7 +28,6 @@ class ToDo extends Component {
         if (!this.state.bucketName){
             message.error({
                 content: 'Bucket Name is Required',
-                className: 'custom-class',
                 style: {
                     marginTop: '20vh',
                 },
@@ -45,10 +44,10 @@ class ToDo extends Component {
                     <Sider theme='light' width={400} style={{ padding: '20px', borderRight: '1px solid #1DA1F2'}}>
                     <Form>
                         <Form.Item name="bucketName" label="Name">
-                            <Input name="bucketName" onChange={(e) => this.onChange(e)} value={this.state.bucketName} allowClear={true}/>
+                            <Input name="bucketName" onChange={(e) => this.onChange(e)} value={this.state.bucketName} allowClear={true} placeholder="Bucket Name"/>
                         </Form.Item>
                         <Form.Item name="label" label="Label">
-                            <Input name="label" onChange={(e) => this.onChange(e)} value={this.state.label} allowClear={true}/>
+                            <Input name="label" onChange={(e) => this.onChange(e)} value={this.state.label} allowClear={true} placeholder="Bucket Category"/>
                         </Form.Item>
                         <Form.Item>
                             <Button htmlType="submit" style={{float: 'right'}} onClick={() => this.onSubmit()}>Create Bucket</Button>
@@ -61,7 +60,7 @@ class ToDo extends Component {
                     <ToDoList />
                 </Content>
             </Layout>
-            <Footer style={{ padding: 0, textAlign: 'center', background: 'yellow'}}>&copy; {new Date().getFullYear()}</Footer>
+            <Footer style={{ padding: 0, textAlign: 'center', background: 'yellow'}}>starkblaze01 &copy; {new Date().getFullYear()}</Footer>
         </Layout>
         )
     }

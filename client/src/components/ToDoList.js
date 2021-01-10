@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Switch, Card, Modal, Button, Divider, Input, Typography } from 'antd';
+import { Switch, Card, Modal, Button, Divider, Input, Typography, message } from 'antd';
 import {connect} from 'react-redux';
 import { updateToDo } from '../actions/toDoAction'
 import PropTypes from 'prop-types';
@@ -21,6 +21,15 @@ class ToDoList extends Component {
         this.setState({addModal:true});
     };
     async handleOk() {
+        if (!this.state.newToDo) {
+            message.error({
+                content: 'Task Description is Required',
+                style: {
+                    marginTop: '20vh',
+                },
+            });
+            return;
+        }
         this.setState({ addModal: false });
         let list = [{ description: this.state.newToDo, done: false }].concat(this.props.toDo.currentBucket.list)
         console.log(list)
@@ -35,6 +44,15 @@ class ToDoList extends Component {
         this.setState({ editModal: true });
     }
     async handleEditOk() {
+        if (!this.state.editToDo) {
+            message.error({
+                content: 'Task Description is Required',
+                style: {
+                    marginTop: '20vh',
+                },
+            });
+            return;
+        }
         this.setState({ editModal: false });
         const list = this.props.toDo.currentBucket.list;
         list[this.state.editIndex].description = this.state.editToDo;
@@ -88,10 +106,10 @@ class ToDoList extends Component {
                     {list}
                 </div>
                 <Modal title="Add New Task" visible={this.state.addModal} onOk={() => this.handleOk()} onCancel={() => this.handleCancel()}>
-                    <Input name="newToDo" value={this.state.newToDo} onChange={(e) => this.onChange(e)}/>
+                    <Input name="newToDo" value={this.state.newToDo} onChange={(e) => this.onChange(e)} placeholder="Task Description"/>
                 </Modal>
                 <Modal title="Edit the Task" visible={this.state.editModal} onOk={() => this.handleEditOk()} onCancel={() => this.handleEditCancel()}>
-                    <Input name="editToDo" value={this.state.editToDo} onChange={(e) => this.onChange(e)}/>
+                    <Input name="editToDo" value={this.state.editToDo} onChange={(e) => this.onChange(e)} placeholder="Task Description"/>
                 </Modal>                    
             </div>
         );

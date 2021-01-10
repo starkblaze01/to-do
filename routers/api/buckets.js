@@ -1,16 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-// Load Input Validation
-// const validateRegisterInput = require("../../validation/register");
-// const validateLoginInput = require("../../validation/login");
 
-// Load User model
+// Load Bucket model
 const Bucket = require("../../models/Bucket");
 
-// @route GET api/users/test
-// @desc Tests users route
-// @access  Public
+
 router.get("/test", (req, res) => res.json({ msg: "It works!!" }));
 
 router.post("/add", (req, res) => {
@@ -35,12 +30,17 @@ router.post('/update/:_id', (req, res) => {
     if (list){
         Bucket.findOneAndUpdate({ _id }, { list: list }, { new: true }).then((doc) => {
             Bucket.find().sort({ date: -1 }).then(doc => res.json(doc))
-            console.log(doc)
         })
     }
     else {
         res.json({msg: 'no to-do found'})
     }
+})
+router.delete('/:_id', (req, res) => {
+    const _id = req.params;
+    Bucket.findByIdAndDelete(_id).then(()=> {
+        Bucket.find().sort({ date: -1 }).then(doc => res.json(doc))
+    })
 })
 
 module.exports = router;

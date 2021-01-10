@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { List, Divider, Button } from 'antd';
 import {connect} from 'react-redux';
-import { setToDo } from '../actions/toDoAction';
+import { setToDo, deleteBucket } from '../actions/toDoAction';
 import PropTypes from 'prop-types';
 
+
 class Bucket extends Component {
-
-
     onChange(e){
         console.log(e);
+    }
+    async onClick(_id){
+        await this.props.deleteBucket(_id);
     }
 
     render() {
@@ -26,7 +28,7 @@ class Bucket extends Component {
                         {item.bucketName}
                         {item.label ? <span style={{ float: 'right', background:'#fcff47', padding: '2px', border: '1px solid black', borderRadius: '0.5em'}}>{item.label}</span> : ''}
                         <Divider />
-                        <Button danger>Delete Bucket</Button>
+                        <Button danger onClick={() => this.onClick(item._id)}>Delete Bucket</Button>
                     </List.Item>
                 }
             />
@@ -37,9 +39,10 @@ class Bucket extends Component {
 
 Bucket.propTypes = {
     setToDo: PropTypes.func.isRequired,
+    deleteBucket: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     toDo: state.toDo,
 });
-export default connect(mapStateToProps, { setToDo })(Bucket);
+export default connect(mapStateToProps, { setToDo, deleteBucket })(Bucket);
