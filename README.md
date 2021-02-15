@@ -1,3 +1,5 @@
-# to-do
+<div align="center">
 
-This is the test repo.
+# to-do App
+
+_A simple to-do application using MERN stack_
